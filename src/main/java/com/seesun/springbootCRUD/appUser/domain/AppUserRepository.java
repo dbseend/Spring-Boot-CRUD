@@ -1,4 +1,4 @@
-package com.seesun.springbootCRUD.domain;
+package com.seesun.springbootCRUD.appUser.domain;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

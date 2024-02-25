@@ -1,10 +1,10 @@
-package com.seesun.springbootCRUD.controller;
+package com.seesun.springbootCRUD.appUser.controller;
 
-import com.seesun.springbootCRUD.dto.request.AppUserCreateRequest;
-import com.seesun.springbootCRUD.dto.request.AppUserUpdateRequest;
-import com.seesun.springbootCRUD.dto.response.AppUserAllResponse;
-import com.seesun.springbootCRUD.dto.response.AppUserResponse;
-import com.seesun.springbootCRUD.service.AppUserService;
+import com.seesun.springbootCRUD.appUser.dto.response.AppUserAllResponse;
+import com.seesun.springbootCRUD.appUser.dto.response.AppUserResponse;
+import com.seesun.springbootCRUD.appUser.dto.request.AppUserCreateRequest;
+import com.seesun.springbootCRUD.appUser.dto.request.AppUserUpdateRequest;
+import com.seesun.springbootCRUD.appUser.service.AppUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

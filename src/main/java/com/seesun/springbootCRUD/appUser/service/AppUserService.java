@@ -1,11 +1,15 @@
-package com.seesun.springbootCRUD.service;
+package com.seesun.springbootCRUD.appUser.service;
 
-import com.seesun.springbootCRUD.domain.AppUser;
-import com.seesun.springbootCRUD.domain.AppUserRepository;
-import com.seesun.springbootCRUD.dto.request.AppUserCreateRequest;
-import com.seesun.springbootCRUD.dto.request.AppUserUpdateRequest;
-import com.seesun.springbootCRUD.dto.response.AppUserAllResponse;
-import com.seesun.springbootCRUD.dto.response.AppUserResponse;
+import com.seesun.springbootCRUD.appUser.domain.AppUser;
+import com.seesun.springbootCRUD.appUser.domain.AppUserRepository;
+import com.seesun.springbootCRUD.appUser.dto.response.AppUserAllResponse;
+import com.seesun.springbootCRUD.appUser.dto.response.AppUserResponse;
+import com.seesun.springbootCRUD.appUser.dto.request.AppUserCreateRequest;
+import com.seesun.springbootCRUD.appUser.dto.request.AppUserUpdateRequest;
+import com.seesun.springbootCRUD.book.domain.Book;
+import com.seesun.springbootCRUD.book.domain.BookRepository;
+import com.seesun.springbootCRUD.book.dto.response.BookAllResponse;
+import com.seesun.springbootCRUD.book.dto.response.BookResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,12 +21,7 @@ import java.util.List;
 public class AppUserService {
 
     private final AppUserRepository appUserRepository;
-    /*
-    @Autowired
-    public AppUserService(AppUserRepository appUserRepository) {
-        this.appUserRepository = appUserRepository;
-    }
-    */
+    private final BookRepository bookRepository;
 
     // 사용자 등록 메소드
     @Transactional
@@ -39,11 +38,12 @@ public class AppUserService {
                 appUser.getId(),
                 appUser.getUsername(),
                 appUser.getAge(),
-                appUser.getPhoneNumber()
+                appUser.getPhoneNumber(),
+                null
         );
     }
 
-    // 사용자 ID로 사용자 조회 메소드
+    // 사용자 ID로 사용자 조회 메소드(인적 사항 + 도서 대여 여부)
     @Transactional
     public AppUserResponse readAppUser(Long id) {
 
@@ -51,15 +51,22 @@ public class AppUserService {
         AppUser appUser = appUserRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. id=" + id));
 
+        List<Book> bookList = bookRepository.findByAppUserId(id);
+        List<BookResponse> bookResponseList = bookList.stream()
+                .map(BookResponse::new)
+                .toList();
+        BookAllResponse bookAllResponse = new BookAllResponse(bookResponseList, bookResponseList.size());
+
         return new AppUserResponse(
                 appUser.getId(),
                 appUser.getUsername(),
                 appUser.getAge(),
-                appUser.getPhoneNumber()
+                appUser.getPhoneNumber(),
+                bookAllResponse
         );
     }
 
-    // 사용자 전체 조회 메소드
+    // 사용자 전체 조회 메소드(인적 사항)
     @Transactional
     public AppUserAllResponse readAllAppUser() {
 
@@ -70,7 +77,8 @@ public class AppUserService {
                         appUser.getId(),
                         appUser.getUsername(),
                         appUser.getAge(),
-                        appUser.getPhoneNumber()
+                        appUser.getPhoneNumber(),
+                        null
                 ))
                 .toList();
 
@@ -91,7 +99,8 @@ public class AppUserService {
                 appUser.getId(),
                 appUser.getUsername(),
                 appUser.getAge(),
-                appUser.getPhoneNumber()
+                appUser.getPhoneNumber(),
+                null
         );
     }
 

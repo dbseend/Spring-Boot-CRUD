@@ -1,13 +1,20 @@
-package com.seesun.springbootCRUD.domain;
+package com.seesun.springbootCRUD.appUser.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.seesun.springbootCRUD.book.domain.Book;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity // 데이터베이스 테이블과 매핑되는 객체
 @Getter // Getter 메소드 자동 생성
 @NoArgsConstructor // 기본 생성자 자동 생성
+@AllArgsConstructor
+@Builder
 @Table(name = "app_user") // 테이블 이름 지정, 없으면 클래스 이름을 테이블 이름으로 사용
 public class AppUser {
 
@@ -21,7 +28,10 @@ public class AppUser {
 
     private String phoneNumber;
 
-    @Builder // 생성자 대신 사용, 인자 순서를 지키지 않아도 됨
+    @OneToMany(mappedBy = "appUser", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonBackReference
+    private List<Book> bookList;
+
     public AppUser(String username, Integer age, String phoneNumber) {
         this.username = username;
         this.age = age;

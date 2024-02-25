@@ -1,5 +1,7 @@
-package com.seesun.springbootCRUD.dto.response;
+package com.seesun.springbootCRUD.appUser.dto.response;
 
+import com.seesun.springbootCRUD.book.dto.response.BookAllResponse;
+import com.seesun.springbootCRUD.book.dto.response.BookResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,4 +18,6 @@ public class AppUserResponse {
     private Integer age;
 
     private String phoneNumber;
+
+    private BookAllResponse bookList;
 }

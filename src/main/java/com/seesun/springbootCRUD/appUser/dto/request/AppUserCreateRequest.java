@@ -1,11 +1,11 @@
-package com.seesun.springbootCRUD.dto.request;
+package com.seesun.springbootCRUD.appUser.dto.request;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class AppUserUpdateRequest {
+public class AppUserCreateRequest {
 
     private String username;
 
